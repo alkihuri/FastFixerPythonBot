@@ -8,9 +8,10 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(content_types=types.ContentTypes.PHOTO)
 async def send_to_chat(message: types.Message):
-
-    msg = message.from_user + ":"  + message.caption
-    await bot.send_photo(chat_id=Config.programmers_chat_id, photo=message.photo[-1].file_id, caption=msg)
+  
+    msg = f'Отправил {message.from_user.first_name} {message.from_user.last_name} (id: {message.from_user.id})'
+    await bot.send_photo(chat_id=Config.programmers_chat_id, photo=message.photo[-1].file_id, caption=message.caption)
+    await bot.send_message(chat_id=Config.programmers_chat_id, text=msg) 
     await bot.send_message(chat_id=message.chat.id, text='Ошибка отправлена и скоро будет исправлена')
 
 @dp.message_handler(content_types=types.ContentTypes.TEXT)
